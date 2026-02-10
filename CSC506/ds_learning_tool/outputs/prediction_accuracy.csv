@@ -1,0 +1,8 @@
+ds,op,expected,inferred,match
+Stack,push,O(1),O(n),False
+Stack,search,O(n),O(n),True
+Queue,enqueue,O(1),O(n),False
+Queue,search,O(n),O(n),True
+Linked List,insert_back,O(1),O(n),False
+Linked List,search,O(n),O(n),True
+Linked List,delete_value,O(n),O(n),True
