@@ -1,0 +1,17 @@
+dataset_type,n,best_algorithm,median_seconds,status
+partially_sorted,1000,merge,0.002267636,OK
+partially_sorted,5000,merge,0.033325660,OK
+partially_sorted,10000,merge,0.033500546,OK
+partially_sorted,50000,merge,0.197769679,OK
+random,1000,merge,0.002695763,OK
+random,5000,merge,0.015089759,OK
+random,10000,merge,0.031265092,OK
+random,50000,merge,0.238488266,OK
+reverse_sorted,1000,merge,0.022350299,OK
+reverse_sorted,5000,merge,0.023386874,OK
+reverse_sorted,10000,merge,0.042745518,OK
+reverse_sorted,50000,merge,0.148357313,OK
+sorted,1000,bubble,0.000089747,OK
+sorted,5000,bubble,0.000667809,OK
+sorted,10000,bubble,0.001018527,OK
+sorted,50000,bubble,0.004258878,OK
