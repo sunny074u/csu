@@ -1,0 +1,55 @@
+Portfolio Project Presentation Outline
+
+Slide 1: Title
+- Portfolio System for Sets, Sorting Algorithms, and Data Structures
+
+Slide 2: Project Goals
+- Implement bubble sort with visualization
+- Implement quickselect
+- Build a custom Set class
+- Integrate stack, queue, tree, graph, and hash table
+- Add performance analysis and user interaction
+
+Slide 3: System Design
+- Menu-driven Python application
+- Standard library only
+- Separate functional sections for algorithms and structures
+
+Slide 4: Bubble Sort Demo
+- Show unsorted list
+- Show comparisons and swaps
+- Show final sorted output
+
+Slide 5: Quickselect Demo
+- Explain kth smallest problem
+- Show example input
+- Show returned result
+
+Slide 6: Set Operations Demo
+- Union
+- Intersection
+- Difference
+- Symmetric difference
+- Explain static vs dynamic use cases
+
+Slide 7: Data Structures Demo
+- Stack
+- Queue
+- Binary search tree
+- Graph with BFS/DFS
+- Hash table
+
+Slide 8: Performance Findings
+- Bubble sort vs built-in sorting
+- Quickselect vs sorting then selecting
+- What the timing results show
+
+Slide 9: Key Lessons
+- Algorithm choice matters
+- Data structure choice depends on the problem
+- Simplicity and efficiency are not always the same thing
+
+Slide 10: Conclusion
+- Project demonstrated course mastery
+- Concepts were connected in one working system
+- Biggest takeaway: choosing the right structure is as important as writing correct code

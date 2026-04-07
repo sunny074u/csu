@@ -1,0 +1,312 @@
+================================================================================
+Adjacency Matrix Graph Demo
+================================================================================
+
+Graph structure
+     A    B    C    D    E    F    G    H    
+A    -    2    5    -    -    -    -    -    
+B    2    -    -    1    4    -    -    -    
+C    5    -    -    -    -    2    -    -    
+D    -    1    -    -    1    -    7    -    
+E    -    4    -    1    -    3    -    6    
+F    -    -    2    -    3    -    -    1    
+G    -    -    -    7    -    -    -    2    
+H    -    -    -    -    6    1    2    -    
+
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2)
+
+Visual sketch of the sample graph
+
+               G
+              / \
+             7   2
+            /     \
+A --2-- B --1-- D --1-- E --3-- F --1-- H
+\      |        \                /
+ 5      4         \6            /
+  \    |          \          /
+    C --2----------- F --------
+
+
+DFS traversal from A
+DFS visit: A | depth=0 | path_so_far=['A']
+  DFS explore edge A -> B
+DFS visit: B | depth=1 | path_so_far=['A', 'B']
+  DFS skip visited edge B -> A
+  DFS explore edge B -> D
+DFS visit: D | depth=2 | path_so_far=['A', 'B', 'D']
+  DFS skip visited edge D -> B
+  DFS explore edge D -> E
+DFS visit: E | depth=3 | path_so_far=['A', 'B', 'D', 'E']
+  DFS skip visited edge E -> B
+  DFS skip visited edge E -> D
+  DFS explore edge E -> F
+DFS visit: F | depth=4 | path_so_far=['A', 'B', 'D', 'E', 'F']
+  DFS explore edge F -> C
+DFS visit: C | depth=5 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C']
+  DFS skip visited edge C -> A
+  DFS skip visited edge C -> F
+  DFS skip visited edge F -> E
+  DFS explore edge F -> H
+DFS visit: H | depth=5 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C', 'H']
+  DFS skip visited edge H -> E
+  DFS skip visited edge H -> F
+  DFS explore edge H -> G
+DFS visit: G | depth=6 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C', 'H', 'G']
+  DFS skip visited edge G -> D
+  DFS skip visited edge G -> H
+  DFS skip visited edge E -> H
+  DFS skip visited edge D -> G
+  DFS skip visited edge B -> E
+  DFS skip visited edge A -> C
+DFS order: ['A', 'B', 'D', 'E', 'F', 'C', 'H', 'G']
+
+BFS traversal from A
+BFS visit: A | queue=[] | visited=['A']
+  BFS enqueue: B via A
+  BFS enqueue: C via A
+BFS visit: B | queue=['C'] | visited=['A', 'B', 'C']
+  BFS skip visited edge B -> A
+  BFS enqueue: D via B
+  BFS enqueue: E via B
+BFS visit: C | queue=['D', 'E'] | visited=['A', 'B', 'C', 'D', 'E']
+  BFS skip visited edge C -> A
+  BFS enqueue: F via C
+BFS visit: D | queue=['E', 'F'] | visited=['A', 'B', 'C', 'D', 'E', 'F']
+  BFS skip visited edge D -> B
+  BFS skip visited edge D -> E
+  BFS enqueue: G via D
+BFS visit: E | queue=['F', 'G'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G']
+  BFS skip visited edge E -> B
+  BFS skip visited edge E -> D
+  BFS skip visited edge E -> F
+  BFS enqueue: H via E
+BFS visit: F | queue=['G', 'H'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge F -> C
+  BFS skip visited edge F -> E
+  BFS skip visited edge F -> H
+BFS visit: G | queue=['H'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge G -> D
+  BFS skip visited edge G -> H
+BFS visit: H | queue=[] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge H -> E
+  BFS skip visited edge H -> F
+  BFS skip visited edge H -> G
+BFS order: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+
+Shortest path from A to H
+Dijkstra pick: A | current_distance=0
+  Check edge A -> B (weight=2) | candidate=2 | known=inf
+    Update: best path to B now costs 2
+  Check edge A -> C (weight=5) | candidate=5 | known=inf
+    Update: best path to C now costs 5
+Dijkstra pick: B | current_distance=2
+  Check edge B -> A (weight=2) | candidate=4 | known=0
+  Check edge B -> D (weight=1) | candidate=3 | known=inf
+    Update: best path to D now costs 3
+  Check edge B -> E (weight=4) | candidate=6 | known=inf
+    Update: best path to E now costs 6
+Dijkstra pick: D | current_distance=3
+  Check edge D -> B (weight=1) | candidate=4 | known=2
+  Check edge D -> E (weight=1) | candidate=4 | known=6
+    Update: best path to E now costs 4
+  Check edge D -> G (weight=7) | candidate=10 | known=inf
+    Update: best path to G now costs 10
+Dijkstra pick: E | current_distance=4
+  Check edge E -> B (weight=4) | candidate=8 | known=2
+  Check edge E -> D (weight=1) | candidate=5 | known=3
+  Check edge E -> F (weight=3) | candidate=7 | known=inf
+    Update: best path to F now costs 7
+  Check edge E -> H (weight=6) | candidate=10 | known=inf
+    Update: best path to H now costs 10
+Dijkstra pick: C | current_distance=5
+  Check edge C -> A (weight=5) | candidate=10 | known=0
+  Check edge C -> F (weight=2) | candidate=7 | known=7
+Dijkstra pick: F | current_distance=7
+  Check edge F -> C (weight=2) | candidate=9 | known=5
+  Check edge F -> E (weight=3) | candidate=10 | known=4
+  Check edge F -> H (weight=1) | candidate=8 | known=10
+    Update: best path to H now costs 8
+Dijkstra pick: H | current_distance=8
+Shortest path result: cost=8 | path=['A', 'B', 'D', 'E', 'F', 'H']
+Best route from A to H: ['A', 'B', 'D', 'E', 'F', 'H'] | total cost = 8
+
+Manipulation test
+Added vertex I and edge H-I
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2), I(2)
+I -> H(2)
+Removed edge H-I and vertex I
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2)
+
+================================================================================
+Adjacency List Graph Demo
+================================================================================
+
+Graph structure
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2)
+
+Visual sketch of the sample graph
+
+               G
+              / \
+             7   2
+            /     \
+A --2-- B --1-- D --1-- E --3-- F --1-- H
+\      |        \                /
+ 5      4         \6            /
+  \    |          \          /
+    C --2----------- F --------
+
+
+DFS traversal from A
+DFS visit: A | depth=0 | path_so_far=['A']
+  DFS explore edge A -> B
+DFS visit: B | depth=1 | path_so_far=['A', 'B']
+  DFS skip visited edge B -> A
+  DFS explore edge B -> D
+DFS visit: D | depth=2 | path_so_far=['A', 'B', 'D']
+  DFS skip visited edge D -> B
+  DFS explore edge D -> E
+DFS visit: E | depth=3 | path_so_far=['A', 'B', 'D', 'E']
+  DFS skip visited edge E -> B
+  DFS skip visited edge E -> D
+  DFS explore edge E -> F
+DFS visit: F | depth=4 | path_so_far=['A', 'B', 'D', 'E', 'F']
+  DFS explore edge F -> C
+DFS visit: C | depth=5 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C']
+  DFS skip visited edge C -> A
+  DFS skip visited edge C -> F
+  DFS skip visited edge F -> E
+  DFS explore edge F -> H
+DFS visit: H | depth=5 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C', 'H']
+  DFS skip visited edge H -> E
+  DFS skip visited edge H -> F
+  DFS explore edge H -> G
+DFS visit: G | depth=6 | path_so_far=['A', 'B', 'D', 'E', 'F', 'C', 'H', 'G']
+  DFS skip visited edge G -> D
+  DFS skip visited edge G -> H
+  DFS skip visited edge E -> H
+  DFS skip visited edge D -> G
+  DFS skip visited edge B -> E
+  DFS skip visited edge A -> C
+DFS order: ['A', 'B', 'D', 'E', 'F', 'C', 'H', 'G']
+
+BFS traversal from A
+BFS visit: A | queue=[] | visited=['A']
+  BFS enqueue: B via A
+  BFS enqueue: C via A
+BFS visit: B | queue=['C'] | visited=['A', 'B', 'C']
+  BFS skip visited edge B -> A
+  BFS enqueue: D via B
+  BFS enqueue: E via B
+BFS visit: C | queue=['D', 'E'] | visited=['A', 'B', 'C', 'D', 'E']
+  BFS skip visited edge C -> A
+  BFS enqueue: F via C
+BFS visit: D | queue=['E', 'F'] | visited=['A', 'B', 'C', 'D', 'E', 'F']
+  BFS skip visited edge D -> B
+  BFS skip visited edge D -> E
+  BFS enqueue: G via D
+BFS visit: E | queue=['F', 'G'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G']
+  BFS skip visited edge E -> B
+  BFS skip visited edge E -> D
+  BFS skip visited edge E -> F
+  BFS enqueue: H via E
+BFS visit: F | queue=['G', 'H'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge F -> C
+  BFS skip visited edge F -> E
+  BFS skip visited edge F -> H
+BFS visit: G | queue=['H'] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge G -> D
+  BFS skip visited edge G -> H
+BFS visit: H | queue=[] | visited=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  BFS skip visited edge H -> E
+  BFS skip visited edge H -> F
+  BFS skip visited edge H -> G
+BFS order: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+
+Shortest path from A to H
+Dijkstra pick: A | current_distance=0
+  Check edge A -> B (weight=2) | candidate=2 | known=inf
+    Update: best path to B now costs 2
+  Check edge A -> C (weight=5) | candidate=5 | known=inf
+    Update: best path to C now costs 5
+Dijkstra pick: B | current_distance=2
+  Check edge B -> A (weight=2) | candidate=4 | known=0
+  Check edge B -> D (weight=1) | candidate=3 | known=inf
+    Update: best path to D now costs 3
+  Check edge B -> E (weight=4) | candidate=6 | known=inf
+    Update: best path to E now costs 6
+Dijkstra pick: D | current_distance=3
+  Check edge D -> B (weight=1) | candidate=4 | known=2
+  Check edge D -> E (weight=1) | candidate=4 | known=6
+    Update: best path to E now costs 4
+  Check edge D -> G (weight=7) | candidate=10 | known=inf
+    Update: best path to G now costs 10
+Dijkstra pick: E | current_distance=4
+  Check edge E -> B (weight=4) | candidate=8 | known=2
+  Check edge E -> D (weight=1) | candidate=5 | known=3
+  Check edge E -> F (weight=3) | candidate=7 | known=inf
+    Update: best path to F now costs 7
+  Check edge E -> H (weight=6) | candidate=10 | known=inf
+    Update: best path to H now costs 10
+Dijkstra pick: C | current_distance=5
+  Check edge C -> A (weight=5) | candidate=10 | known=0
+  Check edge C -> F (weight=2) | candidate=7 | known=7
+Dijkstra pick: F | current_distance=7
+  Check edge F -> C (weight=2) | candidate=9 | known=5
+  Check edge F -> E (weight=3) | candidate=10 | known=4
+  Check edge F -> H (weight=1) | candidate=8 | known=10
+    Update: best path to H now costs 8
+Dijkstra pick: H | current_distance=8
+Shortest path result: cost=8 | path=['A', 'B', 'D', 'E', 'F', 'H']
+Best route from A to H: ['A', 'B', 'D', 'E', 'F', 'H'] | total cost = 8
+
+Manipulation test
+Added vertex I and edge H-I
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2), I(2)
+I -> H(2)
+Removed edge H-I and vertex I
+A -> B(2), C(5)
+B -> A(2), D(1), E(4)
+C -> A(5), F(2)
+D -> B(1), E(1), G(7)
+E -> B(4), D(1), F(3), H(6)
+F -> C(2), E(3), H(1)
+G -> D(7), H(2)
+H -> E(6), F(1), G(2)
+
